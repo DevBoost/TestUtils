@@ -39,6 +39,14 @@ public class PluginTestHelper {
 		String pluginRootPath = new File(rootPathString).getAbsolutePath();
 		return pluginRootPath;
 	}
+	
+	public String getPluginRootDirectory(Class<?> clazz) {
+		File pluginRootDirectory = new File(getPluginRootPath(clazz));
+		if (pluginRootDirectory.isFile()) {
+			pluginRootDirectory = pluginRootDirectory.getParentFile();
+		}
+		return pluginRootDirectory.getAbsolutePath();
+	}
 
 	public String getSourcePackagePath(Class<?> clazz) {
 		String pluginRootPath = getPluginRootPath(clazz);
