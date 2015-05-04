@@ -1,7 +1,7 @@
 /*******************************************************************************
- * Copyright (c) 2006-2013
+ * Copyright (c) 2006-2015
  * Software Technology Group, Dresden University of Technology
- * DevBoost GmbH, Berlin, Amtsgericht Charlottenburg, HRB 140026
+ * DevBoost GmbH,, Dresden, Amtsgericht Dresden, HRB 34001.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,7 +10,7 @@
  * 
  * Contributors:
  *   Software Technology Group - TU Dresden, Germany;
- *   DevBoost GmbH - Berlin, Germany
+ *   DevBoost GmbH - Dresden, Germany
  *      - initial API and implementation
  ******************************************************************************/
 package de.devboost.testutils;
@@ -19,11 +19,19 @@ import java.io.File;
 import java.net.URL;
 
 /**
- * The {@link PluginTestHelper} can be used to access test resources (e.g., test
- * data) using the location of a Java class instead of the current working
- * directory.
+ * The {@link PluginTestHelper} can be used to access test resources (e.g., test data) using the location of a Java
+ * class instead of the current working directory.
  */
 public class PluginTestHelper {
+
+	public static final PluginTestHelper INSTANCE = new PluginTestHelper();
+
+	/**
+	 * Use {@link PluginTestHelper#INSTANCE} instead.
+	 */
+	@Deprecated
+	public PluginTestHelper() {
+	}
 
 	public String getPluginRootPath(Class<?> clazz) {
 		URL location = clazz.getProtectionDomain().getCodeSource().getLocation();
@@ -39,7 +47,7 @@ public class PluginTestHelper {
 		String pluginRootPath = new File(rootPathString).getAbsolutePath();
 		return pluginRootPath;
 	}
-	
+
 	public String getPluginRootDirectory(Class<?> clazz) {
 		File pluginRootDirectory = new File(getPluginRootPath(clazz));
 		if (pluginRootDirectory.isFile()) {
@@ -50,7 +58,8 @@ public class PluginTestHelper {
 
 	public String getSourcePackagePath(Class<?> clazz) {
 		String pluginRootPath = getPluginRootPath(clazz);
-		String packageDirectory = File.separator + "src" + File.separator + clazz.getPackage().getName().replace(".", File.separator) + File.separator;
+		String packageDirectory = File.separator + "src" + File.separator
+				+ clazz.getPackage().getName().replace(".", File.separator) + File.separator;
 		String sourcePackagePath = pluginRootPath + packageDirectory;
 		return sourcePackagePath;
 	}
